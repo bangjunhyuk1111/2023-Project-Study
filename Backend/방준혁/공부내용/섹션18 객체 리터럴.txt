@@ -1,0 +1,77 @@
+18, 19, 20, 21
+
+18
+
+객체 리터럴*******************************
+const Person = {
+firstname: 'Bang', 
+lastname: 'Junhyuk', 
+Nickname: ['Handsome', 'Nice'] }
+
+undefined
+
+Person
+{firstname: 'Bang', lastname: 'Junhyuk', Nickname: ['Handsome', 'Nice']}
+
+객체 외부 데이터에 엑세스 하기*****************
+Person['firstname' ]
+'Bang'
+
+Person.firstname
+'Bang'
+
+-->배열과 다른점은 순서가 없다는 것. 
+
+const years = { 2020: 'Bad', 2021: 'So Bad' }
+undefined
+birthyear = 2020
+2020
+years[birthyear]
+'Bad'
+years['2020']
+'Bad'
+
+대괄호안에서 먼저 실행.
+
+----> 객체 활용 예시
+const restaurant = {
+    name: 'Ichiran Ramen',
+    address: `${Math.floor(Math.random() * 100) + 1} Johnson Ave`,
+    city: 'Brooklyn',
+    state: 'NY',
+    zipcode: '11206',
+}
+
+const fullAddress = restaurant.address + ', ' + restaurant.city + ', ' + restaurant.state + ' ' + restaurant.zipcode
+console.log(fullAddress);
+
+결과: "64 Johnson Ave, Brooklyn, NY 11206" 
+
+입력값을 바꾸고 새로운걸 추가******************
+
+Person.firstname = 'Kim'
+'Kim'
+//바꾸고
+Person.order = '22'
+'22'
+//추가하고
+==> 결과는??
+Person
+{firstname: 'Kim', lastname: 'Junhyuk', order: '22'}
+
+객체리터럴을 배열처럼 사용하기**************************
+
+const comment = [
+{username: 'Kim', text: 'hahaha', votes:7}, {username:'Bang',text:'lololol',votes:11} 
+]
+undefined
+
+comment[1].text
+'lololol'
+
+
+객체 리터럴에대한 생각************************
+위에서 사용한 person객체를 예로든다면 
+객체 person은 서랍장
+firstname은 특정 서랍을 여는 열쇠
+Kim은 firstname서랍에 든 내용물

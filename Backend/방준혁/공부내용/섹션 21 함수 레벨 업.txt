@@ -1,0 +1,124 @@
+섹션 21: 함수 레벨 업
+
+함수 범위************************************
+
+함수 안에서 만들어진 변수는 함수 안에서만 유효하다.
+(함수의 블록 안에서만 유효하다.)
+함수 안과 밖에 똑같은 변수가 있더라도 함수안에서 그 변수를 사용하면 안에서 정의 된 대로 실행된다.
+
+렉시컬 범위**********************************
+
+함수1(){
+
+       함수2(){
+        
+         함수3(){
+          
+       }
+       함수3();
+    }
+  함수2(); //함수 2를 실행
+}
+
+함수1(); 
+
+//이렇게하면 함수 1만 실행하지만 함수2 까지 실행되고 함수 1에서 정의된 내용과 2에서 정의된 내용을 공유한다.
+즉 함수1에서 정의된 변수를 함수2에서도 함수3에서도 사용가능하다.
+
+//함수를 중첩할때 충첩한 함수는 바로 상위의 함수를 닫기 바로 전에 실행해주고 중괄호로 닫는다.
+
+
+함수를 표현하는 또 다른 식*************************
+
+const add = function( x, y ){
+     return x + y;
+}
+
+//함수가 변수에 저장된다 --> 함수는 값이다.
+
+함수를 함수로 전달(고차 함수)*********************
+
+함수는 값이다.
+따라서 값을 함수로 전달하듯이 함수도 함수로 전달 할 수 있다.
+
+function first(func){
+   func();
+   func();
+}
+
+function last(){
+   console.log('Hi');
+}
+
+first(last);
+
+위 예시는 last함수를 first로 보내면서 Hi를 두번 출력하게한다.
+
+함수를 반환할 수도 있다 *************************
+
+function abc(){
+const dice = math.random();
+if ( dice > 0.5 ){
+
+   return function() {
+           console.log('good');
+    }
+
+ }else{
+
+   return function(){
+            console.log('bad');
+}
+
+
+위 예시는 랜덤으로 생성된 수가 0.5보다 크면 
+function() {
+           console.log('good');
+    }
+를 반환하고 그 나머지 경우에는
+function(){
+            console.log('bad');
+}
+를 반환한다.
+
+true 인지 false 인지 반환하는 함수****************
+
+function isBetween(num){
+      return num >= 50 && num <= 100
+}
+
+위의 함수는 num이 50이상 100이하 일 경우 true를 아닐경우 false를 반환한다.
+
+어려움...
+function isBetween(down, up){
+   return function(num) {
+return num >= down && num <= up
+    }
+}
+
+const isRight = isBetween(down, up) //정해져있지 않았던 함수의 이름을 정해줌. isRigh함수에서 down과 up의 값은 정해지고 num만 새로 입력.
+함수의 내용에 의한 값을 돌려줌.
+
+
+isRight(num) //num 이 down 과 up 사이에 있다면 true
+
+
+객체의 메서드를 함수로 정의************************
+
+const myMath = {
+PI: 3.14,
+
+sqaure: function (num) { //sqaure는 함수인데...
+return num * num; //num 끼리 곱한값을 돌려주는 함수
+},
+
+cube: function (num) { //cube는 함수인데...
+return num ** 3; //num 의 세제곱을 돌려주는 함수
+}
+}
+
+myMath.sqaure(3);
+==> 9
+
+myMath.cube(2);
+==> 8
