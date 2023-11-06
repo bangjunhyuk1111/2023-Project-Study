@@ -1,0 +1,252 @@
+섹션 22: 콜백과 배열
+
+forEach 메서드 *********************************
+
+const number =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+//선언된 배열
+
+number
+(10) [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+//배열선언 확인
+
+function print(element){ console.log(element) };
+//요소를 받으면 출력하는 print함수 작성
+
+print(number[3]);
+ 4
+//print함수가 잘 작동하는지 확인
+
+number.forEach(print); //forEach 사용예시
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+ 10
+undefined
+
+number.forEach(function (el) { console.log(el) });
+//이렇게 함수를 따로 선언하지 않고 한번에 해결 할 수도 있다.
+
+VM698:1 1
+VM698:1 2
+VM698:1 3
+VM698:1 4
+VM698:1 5
+VM698:1 6
+VM698:1 7
+VM698:1 8
+VM698:1 9
+VM698:1 10
+undefined
+
+==>이것을 for of 구문으로 활용할 수 있다.
+
+for(let element of number){
+console.log(element);
+}
+
+Map 메서드**********************************************
+
+기존의 배열을 활용하여 새로운 배열을 만든다.
+const number =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const newNumber = number.map( function (element){ 
+       return element * 2 //새로 만드는 newNumber의 값들
+});
+
+newNumber
+(10) [2, 4, 6, 8, 10, 12, 14, 16, 18, 20]
+
+이전의 배열도 유지하면서 새로운 배열을 만드는 법이다.
+
+또 다른 예시)
+const fullNames = [{first: 'Albus', last: 'Dumbledore'}, {first: 'Harry', last: 'Potter'}, {first: 'Hermione', last: 'Granger'}, {first: 'Ron', last: 'Weasley'}, {first: 'Rubeus', last: 'Hagrid'}, {first: 'Minerva', last: 'McGonagall'}, {first: 'Severus', last: 'Snape'}];
+
+const firstNames = fullNames.map(function firstName(a){
+    return a.first
+})
+
+화살표 함수***************************************
+
+사용예시)
+const add = (x, y) => {
+    return x + y;
+}
+
+add(3,4)와 같이 실행하면 결과는 7
+---------------------------------------------
+사용예시)
+const square = (x) => {
+   return x * x;
+}
+
+square(9)와 같이 실행하면 결과는 81
+---------------------------------------------
+사용예시)
+const rollDie = () => {
+      return Math.floor(Math.random() * 6) + 1
+}
+
+rollDie와 같이 실행하면 결과는 1 ~ 6 에서 난수 발생
+
+
+화살표 함수의 암시적 반환*************************************
+
+위에서 사용한 화살표함수를 가져와 보겠다
+
+const add = (x, y) => {
+    return x + y;
+}
+
+이것을 같은역할을 수행하는 함수로 바꾸면
+
+const add = (x, y) => ( 
+     x + y;
+)
+
+이고 더 나아가 한줄로 바꾸어 버리면
+
+const add = (x, y) => x + y;
+
+==> 암시적 반환으로 변경하는 방법, return 을 지우고 중괄호를 소괄호로 변경, 소괄소를 지우면 한줄로 변경가능
+
+단, 소괄호 안에는 단하나의 표현식이 있어야한다.
+~~~ = ~~~ 이런식으로는 불가능
+
+
+화살표 함수 응용 ****************************************************
+
+const number =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const newNumber = number.map( (number) => {
+   return number * 2;
+})
+
+number.map 안에 함수를 넣는데 그걸 화살표 함수로 대체했음
+
+화살표함수는 
+(넣을것) =>  return (넣을것)을 활용한 연산등등;
+이런 형태임
+
+
+setTimeout 함수***************************************************
+
+setTime( () => {
+   console.log('Hello')
+}, 3000)
+
+//이렇게 활용하면 3초 뒤에 Hello 를 출력한다.
+
+함수 순서가 
+
+일반 출력 
+setTime함수
+일반 출력
+
+일땐 일반출력 2개가 먼저 실행되고 setTime 함수가 실행된다
+
+
+setInterval 함수**************************************************
+
+setInterval( () => {
+     console.log( Math.random() )
+}, 2000)
+
+//이렇게 활용하면 2초마다 임의의 소수가 출력된다
+
+일정한 시간을 설정하여 반복실행한다
+
+반복을 멈추는 방법은 clearInterval(id)
+
+
+filter 메소드*****************************************************
+
+const number =  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+const newNumber = number.filter( (n) => {
+    return n < 6
+})
+
+//이렇게 하면 새로 생성된 newNummber 배열 안에는 1, 2, 3, 4, 5 가 들어간다.
+
+즉 return 뒤에 새로 생성 할 배열의 값으 조건을 쓴다
+
+map과 차이점은 map은 기존 배열의 값을 변화 시킬 수 있지만, filter은 기존 배열의 값중 조건을 충족하는 값을 골라 새로운 배열을 만든다는 점에서 차이가 있다.
+
+더 요약하면
+const newNumber = number.filter( n => n < 6 )
+
+return 없애고 중괄호를 소괄호로, 넣고자 하는 것은 괄호 떼어도 됌
+
+every 메소드******************************************************
+
+const exams = [ 80, 76, 90, 85, 95 ];
+
+exams.every( score => score >= 75 )
+
+//이 때 exams에 값들을 한번씩 싹 훑으면서 모든 값이 75 이상이라면 true를 반환하고 아닌것이 하나라도 있을때에는 false를 반환한다.
+위의 경우에는 true를 반환하겠다.
+
+const exams = [ 80, 76, 90, 85, 95 ];
+
+exams.every( score => score >= 80 )
+
+위의 경우에는 76점이 존재하므로 false를 반환한다.
+
+한번씩 훑으면서 true인지 false 인지 확인한다.
+
+
+some 메소드 ******************************************************
+
+every와 작동방식이 같으며 하나라도 존재할 시에 true를 아닐시에는 false를 반환한다.
+
+위에 나왔던 메소드를 적절이 섞어서 어떤 조건을 만족하는게 있는지 some으로 확인하고 filter로 걸러내서 새로운 배열로 만들고를 할 수있다.
+
+
+reduce 메소드*****************************************************
+배열을 가져와서 점차 줄여가면서 마지막에는 결국 하나의 값만 남기는것
+
+const exams = [ 80, 76, 90, 85, 95 ];
+
+exams.reduce( (first, last) => {
+     return first + last
+})
+
+여기서 처음에 first가 받는 값은 80
+          처음에 last가 받는 값은 76
+          처음에 반환하는 값은 둘을 더한 156 이며, 이 값은 두번째로 first가 받는값
+                                                                                두번째 last 값은 90
+최종 반환값이 나올때까지 반복한다
+이 최종 반환값은 배열의 값들을 모두 더한 값이겠다
+
+
+예를들어 영화제목과 점수의 값이 들어있는 객체를 가진 배열이 있다고 생각해보자
+
+movies.reduce( (bestMovie, currentMovie) => {
+    if( bestMovie.score < currentMovie ){
+        return currentMovie
+    }
+        return bestMovie
+}
+
+이렇게 하면 모든 영화의 점수들이 비교되면서 결국 점수가 가장 높은 영와의 객체만 남게된다
+
+
+
+const exams = [ 80, 76, 90, 85, 95 ];
+
+exams.reduce( (first, last) =>  first + last, 100)
+이렇게하면 첫번째 인수를 100으로 정한뒤에 배열안의 값들을 더하기 시작한다
+
+
+this를 사용할때 화살표함수*******************************************
+
+객체 안에서 this를 사용하면 그것은 해당 객체를 가리킨다.
+
+하지만 객체안에서 화살표 함수에서 this를 쓰면 윈도우를 가리켜서 이렇게는 쓸 수 없다. 즉 해당 객체를 가리키지않는다.
+
